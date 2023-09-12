@@ -33,8 +33,8 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-//        mQueue = new ArrayIntQueue();
+   //     mQueue = new LinkedIntQueue();
+        mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
     }
@@ -98,6 +98,65 @@ public class IntQueueTest {
                 assertEquals(mQueue.dequeue(), result);
             }
         }
+    }
+
+    @Test
+    public void testCapacityExpansion() {
+        for (int i = 0; i < 15; i++) { // 15 > INITIAL_SIZE
+            mQueue.enqueue(i);
+        }
+        assertEquals(15, mQueue.size());
+        for (int i = 0; i < 15; i++) {
+            assertEquals(Integer.valueOf(i), mQueue.dequeue());
+        }
+    }
+
+    @Test
+    public void testClear() {
+        testList.forEach(n -> mQueue.enqueue(n));
+        mQueue.clear();
+        assertTrue(mQueue.isEmpty());
+        assertNull(mQueue.peek());
+    }
+
+    @Test
+    public void testContinuousEnqueueDequeue() {
+        mQueue.enqueue(1);
+        mQueue.enqueue(2);
+        assertEquals(Integer.valueOf(1), mQueue.dequeue());
+        mQueue.enqueue(3);
+        assertEquals(Integer.valueOf(2), mQueue.dequeue());
+        assertEquals(Integer.valueOf(3), mQueue.peek());
+    }
+
+    @Test
+    public void testDequeueEmptyQueue() {
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
+    public void testSizeAfterMultipleOperations() {
+        mQueue.enqueue(1);
+        mQueue.enqueue(2);
+        mQueue.dequeue();
+        mQueue.enqueue(3);
+        mQueue.enqueue(4);
+        mQueue.dequeue();
+        assertEquals(2, mQueue.size());
+    }
+
+    @Test
+    public void testWrapAroundAndExpansion() {
+        for (int i = 0; i < 10; i++) { 
+            mQueue.enqueue(i);
+        }
+        for (int i = 0; i < 5; i++) {
+            assertEquals(Integer.valueOf(i), mQueue.dequeue());
+        }
+        for (int i = 10; i < 20; i++) { 
+            mQueue.enqueue(i);
+        }
+        assertEquals(Integer.valueOf(5), mQueue.peek());
     }
 
 

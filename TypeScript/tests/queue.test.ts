@@ -53,3 +53,56 @@ describe("test size: ", ()=> {
         expect(queue.size()).toBe(11)
     })
 })
+
+test("test dequeue: dequeue from an empty queue should return null", () => {
+    const queue = createQueue()
+    expect(queue.dequeue()).toBeNull()
+})
+
+test("test dequeue: dequeue after enqueue should return the enqueued value", () => {
+    const queue = createQueue()
+    queue.enqueue(5)
+    expect(queue.dequeue()).toBe(5)
+})
+
+test("test dequeue: multiple enqueues and dequeues should maintain order", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.enqueue(3)
+    expect(queue.dequeue()).toBe(1)
+    expect(queue.dequeue()).toBe(2)
+    expect(queue.dequeue()).toBe(3)
+})
+
+test("test clear: clearing the queue should make it empty", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.clear()
+    expect(queue.isEmpty()).toBeTruthy()
+})
+
+test("test clear: clearing the queue should reset its size to 0", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.clear()
+    expect(queue.size()).toBe(0)
+})
+
+test("test peek: after dequeue, peek should return the next element", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.dequeue()
+    expect(queue.peek()).toBe(2)
+})
+
+test("test size: after dequeue, size should decrease by 1", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    queue.enqueue(2)
+    queue.dequeue()
+    expect(queue.size()).toBe(1)
+})
