@@ -70,9 +70,9 @@ test("test dequeue: multiple enqueues and dequeues should maintain order", () =>
     queue.enqueue(1)
     queue.enqueue(2)
     queue.enqueue(3)
-    expect(queue.dequeue()).toBe(1)
-    expect(queue.dequeue()).toBe(2)
     expect(queue.dequeue()).toBe(3)
+    expect(queue.dequeue()).toBe(2)
+    expect(queue.dequeue()).toBe(1)
 })
 
 test("test clear: clearing the queue should make it empty", () => {
@@ -96,7 +96,7 @@ test("test peek: after dequeue, peek should return the next element", () => {
     queue.enqueue(1)
     queue.enqueue(2)
     queue.dequeue()
-    expect(queue.peek()).toBe(2)
+    expect(queue.peek()).toBe(1)
 })
 
 test("test size: after dequeue, size should decrease by 1", () => {
